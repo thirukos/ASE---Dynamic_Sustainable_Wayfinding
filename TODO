@@ -1,6 +1,9 @@
 -- Authentication = registration, login
 -- Scoring System = get data from db from a user, unlock feature based on the score
--- Connecting APIs - (geolocation - react)(map, routing, public transport - google maps api)
+-- Connecting APIs - (geolocation - )(map, routing, public transport - google maps api)
     -- (weather - OpenWeatherMap API)(sports tracker - strava api)(bookmarking - `need to create`)
 
--- front end
+
+
+
+-- front end -> web app or mobile app
