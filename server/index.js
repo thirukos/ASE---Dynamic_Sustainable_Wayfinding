@@ -6,6 +6,10 @@ const app = express();
 const mongoose = require("mongoose")
 mongoose.connect("mongodb+srv://TCD_ASE_Group8_2023:0hEBbOQQUvwFuhIZ@clusterdsw1.9iyylds.mongodb.net/?retryWrites=true&w=majority")
 
+//database-name = MyDSW_DB
+//database-collection-name = MyDSW_Collection
+//tables = [users, ..]
+
 //to process json data
 const bodyParser=require("body-parser")
 app.use(bodyParser.json())
