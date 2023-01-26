@@ -4,7 +4,7 @@ const app = express();
 
 //Database connection
 const mongoose = require("mongoose")
-mongoose.connect("mongodb+srv://TCD_ASE_Group8_2023:0hEBbOQQUvwFuhIZ@clusterdsw1.9iyylds.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("<scheme>://<username>:<password>@<host>/?retryWrites=true&w=majority")
 
 //database-name = MyDSW-DB
 //tables = [users, ..]
