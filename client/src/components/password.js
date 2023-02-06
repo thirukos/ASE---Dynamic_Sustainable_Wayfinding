@@ -17,7 +17,7 @@ export default function Password() {
 
   const formik = useFormik({
     initialValues : {
-      password : 'admin@123'
+      password : 'admin@123' //example password
     },
     validate : passwordValidate,
     validateOnBlur: false,
@@ -47,7 +47,7 @@ export default function Password() {
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
 
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center' style={{marginTop:"3rem", marginBottom: "3rem"}}>
         <div className={styles.glass}>
 
           <div className="title flex flex-col items-center">

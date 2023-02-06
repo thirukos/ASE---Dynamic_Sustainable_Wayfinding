@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import avatar from '../assets/profile.png';
+import avatar from '../assets/profileBee.png';
 import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { profileValidation } from '../helper/validate';
@@ -62,7 +62,7 @@ export default function Profile() {
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
 
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center' style={{marginTop:"3rem", marginBottom: "3rem"}}>
         <div className={`${styles.glass} ${extend.glass}`} style={{ width: "45%", paddingTop: '3em'}}>
 
           <div className="title flex flex-col items-center">

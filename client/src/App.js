@@ -10,6 +10,8 @@ import Profile from './components/profile';
 import Recovery from './components/recovery';
 import Reset from './components/reset';
 import PageNotFound from './components/pageNotFound';
+// import PublictransTest from './components/publictranstest';
+import PublicTransportIRE from './components/publicTransportIRE';
 
 
 /** auth middleware */
@@ -41,11 +43,19 @@ const router = createBrowserRouter([
         path : '/reset',
         element : <Reset></Reset>
     },
-    {
-        // for any invalid route
-        path : '*',
-        element : <PageNotFound></PageNotFound>
-    },
+    // {
+    //     path : '/publictransportire',
+    //     element : <PublicTransportIRE></PublicTransportIRE>
+    // },
+    // {
+    //     path : '/publictransTest',
+    //     element : <PublictransTest></PublictransTest>
+    // },
+    // {
+    //     // for any invalid route
+    //     path : '*',
+    //     element : <PageNotFound></PageNotFound>
+    // },
 ])
 
 export default function App() {

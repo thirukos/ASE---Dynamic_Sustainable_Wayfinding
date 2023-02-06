@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import avatar from '../assets/profile.png';
+import avatar from '../assets/profileBee.png';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { usernameValidate } from '../helper/validate'
@@ -15,10 +15,10 @@ export default function Username() {
 
   const formik = useFormik({
     initialValues : {
-      username : 'example123'
+      username : 'example123' //sample username
     },
     validate : usernameValidate,
-    validateOnBlur: false,
+    validateOnBlur: false, //validate only when user click submit
     validateOnChange: false,
     onSubmit : async values => {
       setUsername(values.username);
@@ -31,13 +31,13 @@ export default function Username() {
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
 
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center' style={{marginTop:"3rem", marginBottom: "3rem"}}>
         <div className={styles.glass}>
 
           <div className="title flex flex-col items-center">
-            <h4 className='text-5xl font-bold'>Hello Again!</h4>
-            <span className='py-4 text-xl w-2/3 text-center text-gray-500'>
-              Explore More by connecting with us.
+            <h4 className='text-3xl font-bold'>Welcome to DSW!!</h4>
+            <span className='py-2 text-xl w-2/3 text-center text-gray-500'>
+              Dynamic Sustainable Wayfinding application.
             </span>
           </div>
 
