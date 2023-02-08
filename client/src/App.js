@@ -43,10 +43,10 @@ const router = createBrowserRouter([
         path : '/reset',
         element : <Reset></Reset>
     },
-    // {
-    //     path : '/publictransportire',
-    //     element : <PublicTransportIRE></PublicTransportIRE>
-    // },
+    {
+        path : '/publictransportire',
+        element : <PublicTransportIRE></PublicTransportIRE>
+    },
     // {
     //     path : '/publictransTest',
     //     element : <PublictransTest></PublictransTest>

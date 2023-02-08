@@ -34,6 +34,17 @@ export async function getUser({ username }){
     }
 }
 
+export async function getPubTrans(){
+    try {
+        const { data } = await axios.get(`/api/pubtrans`);
+        console.log('helper')
+        console.log(data);
+        return data;
+    } catch (error) {
+        return { error : "Doesn't Match...!"}
+    }
+}
+
 /** register user function */
 export async function registerUser(credentials){
     try {

@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 /** api routes */
 app.use('/api', auth)
 
-app.use('/ipa', publicTransportIre)
+// app.use('/ipa', publicTransportIre)
 
 
 

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from '../config.js'
 import otpGenerator from 'otp-generator';
+import axios from 'axios';
 
 /** middleware for verify user */
 export async function verifyUser(req, res, next){
@@ -164,6 +165,23 @@ export async function getUser(req,res){
     } catch (error) {
         return res.status(404).send({ error : "Cannot Find User Data"});
     }
+
+}
+
+/** GET: http://localhost:8080/api/user/example123 */
+export async function getPubTrans(req,res){
+
+    const data = await axios.get('https://api.nationaltransport.ie/gtfsr/v1?format=json', {
+        headers: {
+            'x-api-key': 'f1121f747e314c1d9b54f569b0b79d6f',
+        }
+    })
+    .then(response => {
+        return response.data
+    })
+    .catch(err => console.error(err));
+    
+    return res.json(data);
 
 }
 

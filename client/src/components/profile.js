@@ -5,8 +5,9 @@ import { useFormik } from 'formik';
 import { profileValidation } from '../helper/validate';
 import convertToBase64 from '../helper/convert';
 import useFetch from '../hooks/fetch.hook';
-import { updateUser } from '../helper/helper'
-import { useNavigate } from 'react-router-dom'
+import { updateUser, getPubTrans } from '../helper/helper'
+import { useNavigate } from 'react-router-dom';
+
 
 import styles from '../styles/username.module.css';
 import extend from '../styles/profile.module.css'
@@ -15,8 +16,11 @@ export default function Profile() {
 
   const [file, setFile] = useState();
   const [{ isLoading, apiData, serverError }] = useFetch();
-  const navigate = useNavigate()
- 
+  const navigate = useNavigate();
+
+  console.log("testing...")
+  console.log(getPubTrans())
+
   const formik = useFormik({
     initialValues : {
       firstName : apiData?.firstName || '',
