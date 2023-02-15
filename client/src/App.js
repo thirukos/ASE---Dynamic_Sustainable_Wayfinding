@@ -9,6 +9,7 @@ import Register from './components/register';
 import Profile from './components/profile';
 import Recovery from './components/recovery';
 import Reset from './components/reset';
+import Direction from './components/Direction';
 import PageNotFound from './components/pageNotFound';
 // import PublictransTest from './components/publictranstest';
 import PublicTransportIRE from './components/publicTransportIRE';
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
     {
         path : '/',
         element : <Username></Username>
+    },
+    {
+
+        path: '/direction',
+        element: <Direction></Direction>
     },
     {
         path : '/register',
