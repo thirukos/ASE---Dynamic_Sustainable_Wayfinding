@@ -26,22 +26,6 @@ app.get('/', (req, res) => {
     res.status(201).json("Home GET Request");
 });
 
-// app.get('/publictransportire', (req, res) => {
-//     // axios.get('https://api.nationaltransport.ie/gtfsr/v1?format=json', {
-//     //     headers: {
-//     //         'x-api-key': 'f1121f747e314c1d9b54f569b0b79d6f',}
-//     // })
-//     // .then(response => {
-//     //     console.log(response.status);
-//     //     console.log(response.text());
-//     // })
-//     // .catch(err => console.error(err));
-//     // res.status(201).json("NationalTransportAPI-connected");
-//     res.json({
-//         name : 'dumbasss'
-//     })
-// });
-
 
 /** api routes */
 app.use('/api', auth)
@@ -62,3 +46,6 @@ connect().then(() => {
 }).catch(error => {
     console.log("Invalid database connection...!");
 })
+
+
+export default app;

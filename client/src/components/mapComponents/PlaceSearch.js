@@ -17,8 +17,8 @@ function PlaceSearch(props) {
   } = usePlacesAutocomplete({
     requestOptions: {
       location: {
-        lat: () => 13.7563,
-        lng: () => 100.5018
+        lat: () => 53.350140,
+        lng: () => -6.266155
       },
       radius: 200 * 1000
     }
