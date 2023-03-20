@@ -4,8 +4,8 @@ import PlaceSearch from './PlaceSearch';
 
 const libraries = ['places']
 const containerStyle = {
-  width: '50vw',
-  height: '60vh'
+  width: '40vw',
+  height: '40vh'
 };
 
 function Map(props) {
@@ -14,8 +14,8 @@ function Map(props) {
   const [response, setResponse] = useState(null);
 
   const center = {
-    lat: 53.350140,
-    lng: -6.266155
+    lat: 13.7563,
+    lng: 100.5018
   };
   
   const options = {

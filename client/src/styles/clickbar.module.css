@@ -1,0 +1,88 @@
+.glass {
+    background: rgba(255, 255, 255, 0.51);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px #4747470b;
+    backdrop-filter: blur(7.1px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    @apply border-4 border-gray-50 shrink-0 h-3/4 w-[30%] rounded-3xl py-5 px-2 min-w-max;
+}
+
+.glass2 {
+
+    background-color: antiquewhite;
+    margin: auto;
+    text-align: center;
+    width: 100px;
+    border-radius: 16px;
+
+}
+
+.title {
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    font-size: 40px;
+}
+
+.bar {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    height: 100px;
+    margin-top: 20px;
+}
+
+.bar ul {
+    padding: 0;
+    margin: 0;
+    padding-top: 15px;
+    width: 100%;
+    margin-top: -40p;
+
+}
+
+.bar levelbar {
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+    width: 100%;
+    margin-top: -20p;
+
+}
+
+.bar li {
+    position: relative;
+    list-style: none;
+    float: left;
+    width: 33.3%;
+    text-align: center;
+    color: #aaa;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all ease 0.75;
+    vertical-align: bottom;
+    height: 59px;
+}
+
+.bar .progressBar {
+    width: 90%;
+    height: 15px;
+    font-size: 4px;
+    text-align: center; 
+    margin: auto;
+    background: #eee;
+    position: absolute;
+    left: 10%;
+    top: 57px;
+    z-index: 1;
+    border-radius: 50px;
+}
+
+.bar .progress {
+    /* width: 0%; */
+    height: 15px;
+    position: relative;
+    background-color: rgb(241, 207, 98);
+    border-radius: 10px;
+    overflow: hidden;
+    }

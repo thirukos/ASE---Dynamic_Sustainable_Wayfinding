@@ -13,6 +13,7 @@ import Direction from './components/Direction';
 import PageNotFound from './components/pageNotFound';
 // import PublictransTest from './components/publictranstest';
 import PublicTransportIRE from './components/publicTransportIRE';
+import ScoringBar from './components/ScoresBar';
 
 
 /** auth middleware */
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
     {
         path : '/publictransportire',
         element : <PublicTransportIRE></PublicTransportIRE>
+    },
+    {
+        path : '/scoringbar',
+        element : <ScoringBar></ScoringBar>
     },
     // {
     //     path : '/publictransTest',
