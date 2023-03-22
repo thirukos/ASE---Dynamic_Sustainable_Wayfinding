@@ -1,6 +1,4 @@
 import React from 'react'
-// import { getPubTrans } from '../helper/helper'
-// import axios from 'axios';
 import { getPubTrans } from '../helper/helper';
 
 class PublicTransportIRE extends React.Component {

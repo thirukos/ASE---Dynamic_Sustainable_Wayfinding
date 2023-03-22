@@ -2,22 +2,22 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import axios from 'axios';
-// import 
 
 
 import connect from './database/connection.js';
 import auth from './routes/authentication.js';
-import publicTransportIre from './routes/pubtrans.js';
 
+/**Importing weather api */
+import weatherApi from './routes/weatherApi.js';
+import riskApi from './routes/riskApi.js';
 
 const app = express();
 
 /** middlewares */
 app.use(express.json());
-// app.use(cors());
 app.use(cors({origin: '*'}));
 app.use(morgan('tiny'));
-app.disable('x-powered-by'); // less hackers know about our stack
+app.disable('x-powered-by');
 
 const port = 3000;
 
@@ -29,8 +29,8 @@ app.get('/', (req, res) => {
 
 /** api routes */
 app.use('/api', auth)
-
-// app.use('/ipa', publicTransportIre)
+app.use('/api', weatherApi)
+app.use('/api', riskApi)
 
 
 

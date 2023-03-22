@@ -34,16 +34,6 @@ export async function getUser({ username }){
     }
 }
 
-export async function getPubTrans(){
-    try {
-        const { data } = await axios.get(`/api/pubtrans`);
-        console.log('helper')
-        console.log(data);
-        return data;
-    } catch (error) {
-        return { error : "Doesn't Match...!"}
-    }
-}
 
 /** register user function */
 export async function registerUser(credentials){
@@ -124,3 +114,27 @@ export async function resetPassword({ username, password }){
         return Promise.reject({ error })
     }
 }
+
+/** get public transport data */
+export async function getPubTrans(){
+    try {
+        const { data } = await axios.get(`/api/pubtrans`);
+        console.log('helper')
+        console.log(data);
+        return data;
+    } catch (error) {
+        return { error : "Public transport data not available"}
+    }
+}
+
+/** get weather data */
+// export async function getWeather({ lat, lon, date }){
+//     try{
+//         const { data } = await axios.get(`/api/weather/${lat}/${lon}/${date}`);
+//         console.log('helper')
+//         console.log(data);
+//         return data;
+//     } catch (error) {
+//         return { error : "Weather data not available"}
+//     }
+// }

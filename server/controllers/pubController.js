@@ -166,7 +166,7 @@ export async function getTrans(req,res){
     // }
 
     res.json({
-        name : 'dumbasss'
+        name : 'check'
     })
 
 }

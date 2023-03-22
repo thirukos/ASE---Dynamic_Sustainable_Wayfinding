@@ -11,8 +11,8 @@ import Recovery from './components/recovery';
 import Reset from './components/reset';
 import Direction from './components/Direction';
 import PageNotFound from './components/pageNotFound';
-// import PublictransTest from './components/publictranstest';
 import PublicTransportIRE from './components/publicTransportIRE';
+// import Weather from './components/weatherAPI';
 
 
 /** auth middleware */
@@ -54,14 +54,9 @@ const router = createBrowserRouter([
         element : <PublicTransportIRE></PublicTransportIRE>
     },
     // {
-    //     path : '/publictransTest',
-    //     element : <PublictransTest></PublictransTest>
-    // },
-    // {
-    //     // for any invalid route
-    //     path : '*',
-    //     element : <PageNotFound></PageNotFound>
-    // },
+    //     path : '/weather',
+    //     element : <Weather></Weather>
+    // }
 ])
 
 export default function App() {
