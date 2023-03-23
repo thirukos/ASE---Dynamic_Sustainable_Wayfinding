@@ -8,12 +8,6 @@ const expect = chai.expect;
 
 describe('Registration process', () => {
     it('should return a 201 status code and a success message after registering new user', (done) => {
-        const user = {
-            username: 'testuser',
-            email: 'testuser@gmail.com',
-            password: 'password@123'
-        };
-
         chai.request('http://localhost:3000')
             .post('/api/register')
             .send({
