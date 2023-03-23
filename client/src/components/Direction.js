@@ -60,10 +60,6 @@ function App() {
           <h2>Dynamic Sustainable Wayfinding</h2>
           <PlaceSearch place={origin} setPlace={setOrigin} getPlace={getOrigin} />
           <PlaceSearch place={destination} setPlace={setDestination} getPlace={getDestination} />
-          <select name='modes of navigation'>
-            <option>sustainable</option>
-            <option>normal</option>
-          </select>
           <Button type="primary" onClick={getRoute}>Post</Button>
         </div>
       </div>
