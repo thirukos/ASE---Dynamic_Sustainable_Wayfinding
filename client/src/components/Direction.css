@@ -1,15 +1,21 @@
-.App {
-    text-align: center;
-  }
-  
-  .route {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 0 auto;
-    text-align: left;
-  }
-  
-  .route__datetime {
-    display: flex;
-  }
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.controls-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}

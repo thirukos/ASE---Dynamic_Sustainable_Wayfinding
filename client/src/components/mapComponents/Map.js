@@ -1,17 +1,21 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { GoogleMap, useLoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, DirectionsRenderer, DirectionsService, Marker } from '@react-google-maps/api';
 import PlaceSearch from './PlaceSearch';
+import TransitLayerComponent from './TransitLayer';
 
 const libraries = ['places']
 const containerStyle = {
-  width: '50vw',
-  height: '60vh'
+  width: '100vw',
+  height: '100vh',
 };
 
 function Map(props) {
 
   const { origin, destination } = props;
   const [response, setResponse] = useState(null);
+  const [transitLayerVisible, setTransitLayerVisible] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+
 
   const center = {
     lat: 53.350140,
@@ -25,8 +29,33 @@ function Map(props) {
 
   const mapRef = useRef();
   const onMapLoad = useCallback(map => {
+    if (navigator.geolocation) {
+      const watchID = navigator.geolocation.watchPosition(
+        position => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        },
+        () => console.log('Error getting user location.'),
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
+  
+      // Clean up the watcher when the component unmounts
+      return () => {
+        navigator.geolocation.clearWatch(watchID);
+      };
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
     mapRef.current = map;
   }, []);
+  
+  
 
 
   const directionsCallback = (googleResponse) => {
@@ -45,10 +74,31 @@ function Map(props) {
         }
       }
     } 
-  }
+  };
+
+
+  
+
+  const toggleTransitLayer = () => {
+    setTransitLayerVisible(prevState => !prevState);
+  };
+
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
+      <button
+
+      onClick={toggleTransitLayer}
+      style={{
+        position: 'absolute',
+        bottom: '10px',
+        right: '10px',
+        zIndex: 10
+      }}
+      > 
+      Toggle Transit Layer
+      </button>
+
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -58,6 +108,8 @@ function Map(props) {
       >
         { /* Child components, such as markers, info windows, etc. */ }
         <>
+          
+          <TransitLayerComponent visible={transitLayerVisible} />
           {destination !== '' && origin !== '' && (
             <DirectionsService 
               options={{
@@ -76,6 +128,19 @@ function Map(props) {
               }}
             />
           )}
+          {userLocation && (
+  <Marker
+    position={userLocation}
+    icon={{
+      url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+      scaledSize: new window.google.maps.Size(25, 25),
+      origin: new window.google.maps.Point(0, 0),
+      anchor: new window.google.maps.Point(12.5, 12.5)
+    }}
+  />
+)}
+
+          
         </>
       </GoogleMap>
     </div>
