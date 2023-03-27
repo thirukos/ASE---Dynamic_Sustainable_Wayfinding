@@ -34,6 +34,19 @@ export async function getUser({ username }){
     }
 }
 
+export async function getUserScore( username ){
+       try
+       {
+        const  res  = await axios.get(`/api/user/${username}`);  
+        return await res.data.score ;
+       }
+       catch(error)
+       {
+        return { error : "no score"}
+       }
+  
+}
+
 
 /** register user function */
 export async function registerUser(credentials){
@@ -49,7 +62,7 @@ export async function registerUser(credentials){
 
         return Promise.resolve(msg)
     } catch (error) {
-        return Promise.reject({ error })
+        return Promise.reject({ error }) 
     }
 }
 
@@ -77,6 +90,22 @@ export async function updateUser(response){
         return Promise.reject({ error : "Couldn't Update Profile...!"})
     }
 }
+
+export async function updateUserscore(response){
+    try{
+        const token = await localStorage.getItem('token');
+        console.log(token)
+        const data = await axios.put('/api/updateuserscore', response,{ headers : { "Authorization" : `Bearer ${token}`}});
+
+        return Promise.resolve({data})
+
+    }catch(error)
+    {
+        return Promise.reject({ error : "Couldn't Update score"})
+    }
+
+}
+
 
 /** generate OTP */
 export async function generateOTP(username){

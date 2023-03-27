@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import axios from 'axios';
-
+import UsersModel from './model/Users.model.js';
 
 import connect from './database/connection.js';
 import auth from './routes/authentication.js';
@@ -24,6 +24,18 @@ const port = 3000;
 /** HTTP GET Request */
 app.get('/', (req, res) => {
     res.status(201).json("Home GET Request");
+});
+
+
+app.get('/getScore',(req,res) => {
+    UsersModel.find({},(err,result => {
+        if(err){
+            res.json(err);
+
+        }else {
+            res.json(result);
+        }
+    }))
 });
 
 

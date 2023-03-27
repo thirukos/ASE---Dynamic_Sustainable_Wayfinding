@@ -21,7 +21,7 @@ export async function verifyUser(req, res, next){
         return res.status(404).send({ error: "Authentication Error"});
     }
 }
-
+ 
 
 /** POST: http://localhost:8080/api/register 
  * @param : {
@@ -148,8 +148,7 @@ export async function getUser(req,res){
     
     const { username } = req.params;
 
-    try {
-        
+    try {    
         if(!username) return res.status(501).send({ error: "Invalid Username"});
 
         UserModel.findOne({ username }, function(err, user){
@@ -159,6 +158,7 @@ export async function getUser(req,res){
             /** remove password from user */
             // mongoose return unnecessary data with object so convert it into json
             const { password, ...rest } = Object.assign({}, user.toJSON());
+            //console.log(rest['score'])
 
             return res.status(201).send(rest);
         })
@@ -166,8 +166,9 @@ export async function getUser(req,res){
     } catch (error) {
         return res.status(404).send({ error : "Cannot Find User Data"});
     }
-
 }
+
+
 
 /** GET: http://localhost:8080/api/user/example123 */
 export async function getPubTrans(req,res){
@@ -198,11 +199,9 @@ body: {
 }
 */
 export async function updateUser(req,res){
+    
     try {
-        
-        // const id = req.query.id;
         const { userId } = req.user;
-
         if(userId){
             const body = req.body;
 
@@ -214,6 +213,36 @@ export async function updateUser(req,res){
             })
 
         }else{
+            return res.status(401).send({ error : "User Not Found...!"});
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error });
+    }
+}
+
+/** PUT: http://localhost:8080/api/updateUserscore 
+ * @param: {
+  "header" : "<token>"
+}
+body: {
+    score : ""
+}
+*/
+export async function updateUserscore(req,res){
+    
+    try {
+        const { userId } = req.user;  
+        
+        if(userId){ 
+            const  score  = req.body 
+            UserModel.updateOne({ _id : userId }, score, function(err, data){
+                if(err) throw err;
+                return res.status(201).send({ msg : "Record Updated...!"});
+            } )
+
+        }
+        else{
             return res.status(401).send({ error : "User Not Found...!"});
         }
 
@@ -293,65 +322,3 @@ export async function resetPassword(req,res){
     }
 }
 
-/** GET: http://localhost:8080/api/weather/53.3498/-6.2603/2023-03-18 */
-// export async function getWeather(req, res){
-//     // Key to access Open Weather API
-//     const API_KEY = '4f6739af1a34c954ffdd8969e47f3b67';
-//     // Required parameters 
-//     const { lat, lon, date } = req.params;
-//     // Convert date to Unix time
-//     const unixTime = Math.floor(new Date(date).getTime() / 1000);
-    
-//     try {
-//         // Get current weather data
-//         const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
-//         console.log('currentUrl:', currentUrl);
-//         const currentResponse = await fetch(currentUrl);
-//         const currentData = await currentResponse.json();
-//         console.log('currentData:', currentData);
-
-//         // Get 5-day forecast data
-//         const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
-//         console.log('forecastUrl:', forecastUrl);
-//         const forecastResponse = await fetch(forecastUrl);
-//         const forecastData = await forecastResponse.json();
-//         console.log('forecastData:', forecastData);
-
-//         // Get road risk
-//         const roadriskUrl = `https://api.openweathermap.org/data/2.5/roadrisk?lat=${lat}&lon=${lon}&appid=${API_KEY}&dt=${unixTime}`;
-//         console.log('roadriskUrl:', roadriskUrl);
-//         const roadriskResponse = await fetch(roadriskUrl);
-//         const roadriskData = await roadriskResponse.json();
-//         console.log('roadriskData:', roadriskData);
-        
-//         // Parse the data and return it to the client
-//         const weather = {
-//             current: {
-//               weather: currentData.weather[0].main,
-//               temperature: currentData.main.temp,
-//               temp_min: currentData.main.temp_min,
-//               temp_max: currentData.main.temp_max,
-//               feels_like: currentData.main.feels_like,
-//               humidity: currentData.main.humidity
-//             },
-//             // forecast for next 15 hours
-//             forecast: forecastData.list.slice(0, 5).map(item => ({
-//               datetime: item.dt_txt,
-//               weather: item.weather[0].main,
-//               temperature: item.main.temp,
-//               temp_min: item.main.temp_min,
-//               temp_max: item.main.temp_max,
-//               feels_like: item.main.feels_like,
-//               humidity: item.main.humidity
-//             }))
-//           };
-          
-//           const risk = {
-//               road_risk: roadriskData.forecast[0].roadRisk
-//               };
-//         return res.json({...weather, ...risk});
-//     } catch (error) {
-//         console.error('Error:', error);
-//         return res.status(404).send({ error : "Cannot find weather data"});
-//     }   
-// }
