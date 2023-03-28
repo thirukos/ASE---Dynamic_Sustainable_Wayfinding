@@ -199,7 +199,6 @@ body: {
 }
 */
 export async function updateUser(req,res){
-    
     try {
         const { userId } = req.user;
         if(userId){
@@ -226,23 +225,47 @@ export async function updateUser(req,res){
   "header" : "<token>"
 }
 body: {
-    score : ""
+    score : 2
+    option: 1
 }
 */
 export async function updateUserscore(req,res){
     
     try {
-        const { userId } = req.user;  
-        
-        if(userId){ 
-            const  score  = req.body 
-            UserModel.updateOne({ _id : userId }, score, function(err, data){
-                if(err) throw err;
-                return res.status(201).send({ msg : "Record Updated...!"});
-            } )
-
+        const option = req.body.option
+        let addscore = 0
+        if(option == 1)
+        addscore = 30
+        else if(option ==0)
+        addscore = 50
+        else
+        {
+            return res.status(401).send({ error : "dont know which should be obtained"});
         }
-        else{
+        const { userId } = req.user;
+        if(userId)
+        {
+            const body = req.body;
+            UserModel.findOne({_id : userId},function(err,user)
+            {
+                if(err)console.log('err');
+                else
+                {
+                    user.score+= addscore;
+                }
+                user.save(function(err){
+                    if(err)throw err
+                    else
+                    {
+                        console.log('User score updated successfully!');
+                        return res.status(201).send({ msg : "Record Updated...!"});
+                    }
+                })
+  
+            })
+        }
+        else
+        {
             return res.status(401).send({ error : "User Not Found...!"});
         }
 

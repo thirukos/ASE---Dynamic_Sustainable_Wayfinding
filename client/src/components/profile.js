@@ -18,8 +18,8 @@ export default function Profile() {
   const [{ isLoading, apiData, serverError }] = useFetch(); 
   const navigate = useNavigate();
 
-  console.log("testing...")
-  console.log(getPubTrans())
+  //console.log("testing...")
+  //console.log(getPubTrans())
 
   const formik = useFormik({
     initialValues : {
@@ -28,7 +28,7 @@ export default function Profile() {
       email: apiData?.email || '',
       mobile: apiData?.mobile || '',
       address : apiData?.address || '',
-      score: 0
+      score: apiData?.score || 0
     },
     enableReinitialize: true,
     validate : profileValidation,

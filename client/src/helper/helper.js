@@ -61,7 +61,7 @@ export async function registerUser(credentials){
         }
 
         return Promise.resolve(msg)
-    } catch (error) {
+    } catch (error) { 
         return Promise.reject({ error }) 
     }
 }
@@ -94,7 +94,7 @@ export async function updateUser(response){
 export async function updateUserscore(response){
     try{
         const token = await localStorage.getItem('token');
-        console.log(token)
+        //console.log(token)
         const data = await axios.put('/api/updateuserscore', response,{ headers : { "Authorization" : `Bearer ${token}`}});
 
         return Promise.resolve({data})

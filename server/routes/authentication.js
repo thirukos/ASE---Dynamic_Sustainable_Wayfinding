@@ -26,6 +26,6 @@ router.route('/updateuser').put(Auth, controller.updateUser); // is use to updat
 router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword); // use to reset password
 router.route('/updateuserscore').put(Auth, controller.updateUserscore);
 
-
+ 
 
 export default router;
