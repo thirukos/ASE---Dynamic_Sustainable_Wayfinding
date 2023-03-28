@@ -222,11 +222,11 @@ export async function updateUser(req,res){
 
 /** PUT: http://localhost:8080/api/updateUserscore 
  * @param: {
-  "header" : "<token>"
+  "header" : "Bearer <token>"
 }
 body: {
-    score : 2
-    option: 1
+    "option": 1
+    "score" : 2
 }
 */
 export async function updateUserscore(req,res){
