@@ -20,6 +20,7 @@ export async function getWeather(req, res){
       const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
       const currentResponse = await fetch(currentUrl);
       const currentData = await currentResponse.json();
+      console.log('currentData:', currentData);
       
       // Get city name from response
       const cityName = currentData.name;

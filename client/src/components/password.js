@@ -20,7 +20,7 @@ export default function Password() {
       password : 'admin@123' //example password
     },
     validate : passwordValidate,
-    validateOnBlur: false,
+    validateOnBlur: true,
     validateOnChange: false,
     onSubmit : async values => {
       
