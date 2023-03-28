@@ -21,7 +21,7 @@ export async function verifyUser(req, res, next){
         return res.status(404).send({ error: "Authentication Error"});
     }
 }
-
+ 
 
 /** POST: http://localhost:8080/api/register 
  * @param : {
@@ -148,8 +148,7 @@ export async function getUser(req,res){
     
     const { username } = req.params;
 
-    try {
-        
+    try {    
         if(!username) return res.status(501).send({ error: "Invalid Username"});
 
         UserModel.findOne({ username }, function(err, user){
@@ -159,6 +158,7 @@ export async function getUser(req,res){
             /** remove password from user */
             // mongoose return unnecessary data with object so convert it into json
             const { password, ...rest } = Object.assign({}, user.toJSON());
+            //console.log(rest['score'])
 
             return res.status(201).send(rest);
         })
@@ -166,8 +166,9 @@ export async function getUser(req,res){
     } catch (error) {
         return res.status(404).send({ error : "Cannot Find User Data"});
     }
-
 }
+
+
 
 /** GET: http://localhost:8080/api/user/example123 */
 export async function getPubTrans(req,res){
@@ -199,10 +200,7 @@ body: {
 */
 export async function updateUser(req,res){
     try {
-        
-        // const id = req.query.id;
         const { userId } = req.user;
-
         if(userId){
             const body = req.body;
 
@@ -214,6 +212,60 @@ export async function updateUser(req,res){
             })
 
         }else{
+            return res.status(401).send({ error : "User Not Found...!"});
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error });
+    }
+}
+
+/** PUT: http://localhost:8080/api/updateUserscore 
+ * @param: {
+  "header" : "Bearer <token>"
+}
+body: {
+    "option": 1
+    "score" : 2
+}
+*/
+export async function updateUserscore(req,res){
+    
+    try {
+        const option = req.body.option
+        let addscore = 0
+        if(option == 1)
+        addscore = 30
+        else if(option ==0)
+        addscore = 50
+        else
+        {
+            return res.status(401).send({ error : "dont know which should be obtained"});
+        }
+        const { userId } = req.user;
+        if(userId)
+        {
+            const body = req.body;
+            UserModel.findOne({_id : userId},function(err,user)
+            {
+                if(err)console.log('err');
+                else
+                {
+                    user.score+= addscore;
+                }
+                user.save(function(err){
+                    if(err)throw err
+                    else
+                    {
+                        console.log('User score updated successfully!');
+                        return res.status(201).send({ msg : "Record Updated...!"});
+                    }
+                })
+  
+            })
+        }
+        else
+        {
             return res.status(401).send({ error : "User Not Found...!"});
         }
 

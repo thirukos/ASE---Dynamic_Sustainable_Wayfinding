@@ -15,11 +15,11 @@ import extend from '../styles/profile.module.css'
 export default function Profile() {
 
   const [file, setFile] = useState();
-  const [{ isLoading, apiData, serverError }] = useFetch();
+  const [{ isLoading, apiData, serverError }] = useFetch(); 
   const navigate = useNavigate();
 
-  console.log("testing...")
-  console.log(getPubTrans())
+  //console.log("testing...")
+  //console.log(getPubTrans())
 
   const formik = useFormik({
     initialValues : {
@@ -27,11 +27,12 @@ export default function Profile() {
       lastName: apiData?.lastName || '',
       email: apiData?.email || '',
       mobile: apiData?.mobile || '',
-      address : apiData?.address || ''
+      address : apiData?.address || '',
+      score: apiData?.score || 0
     },
     enableReinitialize: true,
     validate : profileValidation,
-    validateOnBlur: false,
+    validateOnBlur: false, 
     validateOnChange: false,
     onSubmit : async values => {
       values = await Object.assign(values, { profile : file || apiData?.profile || ''})
@@ -55,7 +56,13 @@ export default function Profile() {
   // logout handler function
   function userLogout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     navigate('/')
+  }
+
+  //navigate score interface
+  function scoreUI(){
+    navigate('/score')
   }
 
   if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
@@ -102,10 +109,14 @@ export default function Profile() {
                
                   
               </div>
+              <div className="text-center py-4">
+                <span className='text-gray-500'><button onClick={scoreUI} className='text-red-500' >Your Score</button></span>
+              </div>
 
               <div className="text-center py-4">
                 <span className='text-gray-500'>come back later? <button onClick={userLogout} className='text-red-500' to="/">Logout</button></span>
               </div>
+
 
           </form>
 
