@@ -6,8 +6,8 @@ chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-describe('Registration process', () => {
-    it('should return a 201 status code and a success message after registering new user', (done) => {
+describe('Registration function', () => {
+    it('should return a 201 status code for successfully registering new user', (done) => {
         chai.request('http://localhost:3000')
             .post('/api/register')
             .send({
