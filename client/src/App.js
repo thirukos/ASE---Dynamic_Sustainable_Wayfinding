@@ -12,6 +12,7 @@ import Reset from './components/reset';
 import Direction from './components/Direction';
 import PageNotFound from './components/pageNotFound';
 import PublicTransportIRE from './components/publicTransportIRE';
+import ScoreUI from './components/Scoring/ScoreUI';
 // import Weather from './components/weatherAPI';
 
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
         path : '/publictransportire',
         element : <PublicTransportIRE></PublicTransportIRE>
     },
+    {
+        path:'/score',
+        element: <ScoreUI></ScoreUI>
+    }
     // {
     //     path : '/weather',
     //     element : <Weather></Weather>

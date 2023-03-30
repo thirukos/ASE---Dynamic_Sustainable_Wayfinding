@@ -15,7 +15,7 @@ export default function Username() {
 
   const formik = useFormik({
     initialValues : {
-      username : 'example123' //sample username
+      username : 'Hello!!' //sample username
     },
     validate : usernameValidate,
     validateOnBlur: false, //validate only when user click submit

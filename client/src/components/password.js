@@ -20,7 +20,7 @@ export default function Password() {
       password : 'admin@123' //example password
     },
     validate : passwordValidate,
-    validateOnBlur: false,
+    validateOnBlur: true,
     validateOnChange: false,
     onSubmit : async values => {
       
@@ -34,6 +34,7 @@ export default function Password() {
       loginPromise.then(res => {
         let { token } = res.data;
         localStorage.setItem('token', token);
+        localStorage.setItem('username',username)
         navigate('/profile')
       })
     }
