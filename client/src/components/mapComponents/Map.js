@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { GoogleMap, useLoadScript, DirectionsRenderer, DirectionsService, Marker } from '@react-google-maps/api';
+import DirectionRendererComponent from './DirectionRender';
 import markerImage from '../../assets/marker.jpg';
 // import PlaceSearch from './PlaceSearch';
 import TransitLayerComponent from './TransitLayer';
@@ -15,14 +16,17 @@ const containerStyle = {
 
 function Map(props) {
 
-  const { origin, destination } = props;
+  const { destination, routeRequested } = props;
   const [response, setResponse] = useState(null);
   const [transitLayerVisible, setTransitLayerVisible] = useState(false);
   const [trafficLayerVisible, setTrafficLayerVisible] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [travelMode, setTravelMode] = useState('DRIVING');
-
-  const center = userLocation || { lat: 53.350140, lng: -6.266155 };
+  
+  
+  const center = response
+  ? response.routes[0].bounds.getCenter()
+  : userLocation || { lat: 53.350140, lng: -6.266155 };
   
   const options = {
     // styles: mapStyle,
@@ -67,27 +71,27 @@ function Map(props) {
     
 
   const directionsCallback = (googleResponse) => {
-    if (googleResponse) {
-      if (response) {
-        if (
-          googleResponse.status === 'OK' &&
-          googleResponse.routes[0].overview_polyline !==
-            response.routes[0].overview_polyline &&
-          googleResponse.request.travelMode !== response.request.travelMode
-        ) {
-          setResponse(() => googleResponse);
-        } else {
-          console.log('response: ', googleResponse);
-        }
+  if (googleResponse) {
+    if (response) {
+      if (
+        googleResponse.status === 'OK' &&
+        googleResponse.routes[0].overview_polyline !==
+          response.routes[0].overview_polyline &&
+        googleResponse.request.travelMode !== response.request.travelMode
+      ) {
+        setResponse(() => googleResponse);
       } else {
-        if (googleResponse.status === 'OK') {
-          setResponse(() => googleResponse);
-        } else {
-          console.log('response: ', googleResponse);
-        }
+        console.log('response: ', googleResponse);
+      }
+    } else {
+      if (googleResponse.status === 'OK') {
+        setResponse(() => googleResponse);
+      } else {
+        console.log('response: ', googleResponse);
       }
     }
-  };
+  }
+};
   
 // add the traffic layer
   const toggleTrafficLayer = () => {
@@ -213,24 +217,18 @@ useEffect(() => {
         <>
           <TrafficLayerComponent visible={trafficLayerVisible} />
           <TransitLayerComponent visible={transitLayerVisible} />
-          {destination !== '' && origin !== '' && (
-            <DirectionsService 
-              options={{
-                origin,
-                destination,
-                travelMode: travelMode
-              }}
-              callback={directionsCallback}
+          {destination !== '' && routeRequested && ( // Add routeRequested check
+    <DirectionsService
+      options={{
+        origin: userLocation,
+        destination,
+        travelMode: travelMode,
+      }}
+      callback={directionsCallback}
             />
           )}
 
-          {response !== null && (
-            <DirectionsRenderer 
-              options={{
-                directions: response
-              }}
-            />
-          )}
+          <DirectionRendererComponent response={response} />
           {userLocation && (
   <Marker
     key={`${userLocation.lat}-${userLocation.lng}-${Date.now()}`} // Add Date.now() to the key
