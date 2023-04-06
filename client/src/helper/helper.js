@@ -157,13 +157,13 @@ export async function getPubTrans(){
 }
 
 /** get weather data */
-// export async function getWeather({ lat, lon, date }){
-//     try{
-//         const { data } = await axios.get(`/api/weather/${lat}/${lon}/${date}`);
-//         console.log('helper')
-//         console.log(data);
-//         return data;
-//     } catch (error) {
-//         return { error : "Weather data not available"}
-//     }
-// }
+export async function getWeather({ lat, lon, date }){
+    try{
+        const { data } = await axios.get(`/api/weather/${lat}/${lon}/${date}`);
+        console.log('helper')
+        console.log(data);
+        return data;
+    } catch (error) {
+        return { error : "Weather data not available"}
+    }
+}

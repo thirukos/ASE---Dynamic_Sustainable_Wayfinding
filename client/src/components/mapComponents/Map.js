@@ -5,6 +5,8 @@ import markerImage from '../../assets/marker.jpg';
 // import PlaceSearch from './PlaceSearch';
 import TransitLayerComponent from './TransitLayer';
 import TrafficLayerComponent from './TrafficLayer';
+import './buttons.css';
+
 
 
 
@@ -16,17 +18,18 @@ const containerStyle = {
 
 function Map(props) {
 
-  const { destination, routeRequested } = props;
+  const { destination, routeRequested, clearRoute, directionResponse, setDirectionResponse} = props;
   const [response, setResponse] = useState(null);
   const [transitLayerVisible, setTransitLayerVisible] = useState(false);
   const [trafficLayerVisible, setTrafficLayerVisible] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [travelMode, setTravelMode] = useState('DRIVING');
-  
+  const [mapCenter, setMapCenter] = useState(null);
+
   
   const center = response
   ? response.routes[0].bounds.getCenter()
-  : userLocation || { lat: 53.350140, lng: -6.266155 };
+  : userLocation ;
   
   const options = {
     // styles: mapStyle,
@@ -66,32 +69,31 @@ function Map(props) {
     mapRef.current = map;
   }, []);
   
-  
-  
-    
-
   const directionsCallback = (googleResponse) => {
-  if (googleResponse) {
-    if (response) {
-      if (
-        googleResponse.status === 'OK' &&
-        googleResponse.routes[0].overview_polyline !==
-          response.routes[0].overview_polyline &&
-        googleResponse.request.travelMode !== response.request.travelMode
-      ) {
-        setResponse(() => googleResponse);
+    if (googleResponse) {
+      if (directionResponse) {
+        if (
+          googleResponse.status === 'OK' &&
+          googleResponse.routes[0].overview_polyline !==
+            directionResponse.routes[0].overview_polyline &&
+          googleResponse.request.travelMode !== directionResponse.request.travelMode
+        ) {
+          setDirectionResponse(() => googleResponse);
+          setMapCenter(googleResponse.routes[0].bounds.getCenter()); // Update map center
+        } else {
+          console.log('response: ', googleResponse);
+        }
       } else {
-        console.log('response: ', googleResponse);
-      }
-    } else {
-      if (googleResponse.status === 'OK') {
-        setResponse(() => googleResponse);
-      } else {
-        console.log('response: ', googleResponse);
+        if (googleResponse.status === 'OK') {
+          setDirectionResponse(() => googleResponse);
+          setMapCenter(googleResponse.routes[0].bounds.getCenter()); // Update map center
+        } else {
+          console.log('response: ', googleResponse);
+        }
       }
     }
-  }
-};
+  };
+    
   
 // add the traffic layer
   const toggleTrafficLayer = () => {
@@ -147,48 +149,20 @@ useEffect(() => {
   };
 }, []);
 
-
   return (
     <div style={{ position: 'relative' }}>
 
-      <button
-        onClick={simulateLocationChange}
-        style={{
-          position: 'absolute',
-          bottom: '10px',
-          right: '10px',
-          zIndex: 10,
-        }}
-      >
-        Simulate Location Change
-      </button>
-
-
-      <button
-        onClick={toggleTrafficLayer}
-        style={{
-          position: 'absolute',
-          bottom: '40px',
-          right: '10px',
-          zIndex: 10,
-        }}
-      >
-        Toggle Traffic Layer
-      </button>
-
-      <button
-
-        onClick={toggleTransitLayer}
-        style={{
-          position: 'absolute',
-          bottom: '70px',
-          right: '10px',
-          zIndex: 10,
-      }}
-      > 
-      Toggle Transit Layer
-      </button>
-
+<div className="map-buttons-container">
+    <button className="map-button" onClick={simulateLocationChange}>
+      Simulate
+    </button>
+    <button className="map-button" onClick={toggleTrafficLayer}>
+      Traffic Layer
+    </button>
+    <button className="map-button" onClick={toggleTransitLayer}>
+      Transit Layer
+    </button>
+  </div>
       <select
         value={travelMode}
         onChange={changeTravelMode}
@@ -207,7 +181,7 @@ useEffect(() => {
 
       <GoogleMap
   mapContainerStyle={containerStyle}
-  center={center}
+  center={mapCenter ? mapCenter : userLocation}
   zoom={15}
   options={options}
   onLoad={onMapLoad}
@@ -228,7 +202,6 @@ useEffect(() => {
             />
           )}
 
-          <DirectionRendererComponent response={response} />
           {userLocation && (
   <Marker
     key={`${userLocation.lat}-${userLocation.lng}-${Date.now()}`} // Add Date.now() to the key
@@ -245,6 +218,7 @@ useEffect(() => {
 
           
         </>
+        <DirectionRendererComponent response={directionResponse} routeRequested={routeRequested} />
       </GoogleMap>
     </div>
   );
