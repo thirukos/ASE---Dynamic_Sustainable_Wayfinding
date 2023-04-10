@@ -6,10 +6,12 @@ import otpGenerator from 'otp-generator';
 import axios from 'axios';
 import fetch from 'node-fetch';
 
+
 /** middleware for verify user */
-export async function verifyUser(req, res, next){
+export async function verifyUser(req, res, next){ 
+
     try {
-        
+       
         const { username } = req.method == "GET" ? req.query : req.body;
 
         // check the user existance

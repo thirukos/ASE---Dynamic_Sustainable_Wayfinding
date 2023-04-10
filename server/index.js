@@ -10,6 +10,7 @@ import auth from './routes/authentication.js';
 /**Importing weather api */
 import weatherApi from './routes/weatherApi.js';
 import riskApi from './routes/riskApi.js';
+import routeApi from './routes/routeApi.js';
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.get('/getScore',(req,res) => {
 app.use('/api', auth)
 app.use('/api', weatherApi)
 app.use('/api', riskApi)
+app.use('/api', routeApi)
 
 
 
