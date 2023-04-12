@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { GoogleMap, useLoadScript, DirectionsRenderer, DirectionsService, Marker } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, DirectionsService, Marker } from '@react-google-maps/api';
 import DirectionRendererComponent from './DirectionRender';
 import markerImage from '../../assets/marker.jpg';
 // import PlaceSearch from './PlaceSearch';
@@ -18,8 +18,7 @@ const containerStyle = {
 
 function Map(props) {
 
-  const { destination, routeRequested, clearRoute, directionResponse, setDirectionResponse} = props;
-  const [response, setResponse] = useState(null);
+  const { destination, routeRequested, clearRoute, directionResponse, setDirectionResponse, setDistance} = props;
   const [transitLayerVisible, setTransitLayerVisible] = useState(false);
   const [trafficLayerVisible, setTrafficLayerVisible] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
@@ -27,9 +26,7 @@ function Map(props) {
   const [mapCenter, setMapCenter] = useState(null);
 
   
-  const center = response
-  ? response.routes[0].bounds.getCenter()
-  : userLocation ;
+  const center = userLocation;
   
   const options = {
     // styles: mapStyle,
@@ -80,6 +77,10 @@ function Map(props) {
         ) {
           setDirectionResponse(() => googleResponse);
           setMapCenter(googleResponse.routes[0].bounds.getCenter()); // Update map center
+  
+          // Get the distance between the starting point and destination
+          const distance = googleResponse.routes[0].legs[0].distance;
+          setDistance(distance.text); // Set the distance using the setDistance function
         } else {
           console.log('response: ', googleResponse);
         }
@@ -87,6 +88,10 @@ function Map(props) {
         if (googleResponse.status === 'OK') {
           setDirectionResponse(() => googleResponse);
           setMapCenter(googleResponse.routes[0].bounds.getCenter()); // Update map center
+  
+          // Get the distance between the starting point and destination
+          const distance = googleResponse.routes[0].legs[0].distance;
+          setDistance(distance.text); // Set the distance using the setDistance function
         } else {
           console.log('response: ', googleResponse);
         }
@@ -94,7 +99,6 @@ function Map(props) {
     }
   };
     
-  
 // add the traffic layer
   const toggleTrafficLayer = () => {
     setTrafficLayerVisible((prevState) => !prevState);
@@ -109,6 +113,7 @@ function Map(props) {
 // set travel mode
 const changeTravelMode = (event) => {
   setTravelMode(event.target.value);
+  props.onTravelModeChange(event.target.value);
 };
 
 // for test use
