@@ -13,6 +13,8 @@ import Direction from './components/Direction';
 import PageNotFound from './components/pageNotFound';
 import PublicTransportIRE from './components/publicTransportIRE';
 import ScoreUI from './components/Scoring/ScoreUI';
+import Prediction from './components/prediction';
+
 // import Weather from './components/weatherAPI';
 
 
@@ -57,7 +59,11 @@ const router = createBrowserRouter([
     {
         path:'/score',
         element: <ScoreUI></ScoreUI>
-    }
+    },
+        {
+        path : '/DelayPrediction',
+        element : <Prediction></Prediction>
+    },
     // {
     //     path : '/weather',
     //     element : <Weather></Weather>
