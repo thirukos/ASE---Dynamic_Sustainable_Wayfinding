@@ -1,0 +1,28 @@
+.map-buttons-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+  }
+  
+  .map-button {
+    background-color: #1890ff;
+    border: 1px solid #1890ff;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px; /* Reduce font size */
+    padding: 4px 8px; /* Reduce padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .map-button:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+  

@@ -1,5 +1,6 @@
 import React from 'react'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
+import './PlaceSearch.css';
 
 import { Select } from 'antd';
 
@@ -32,7 +33,7 @@ function PlaceSearch(props) {
   return (
     <Select
       showSearch
-      style={{ width: '30%' }}
+      style={{ width: '100%' }} // Change the width to 100%
       placeholder={place}
       notFoundContent={null}
       // value={value}
