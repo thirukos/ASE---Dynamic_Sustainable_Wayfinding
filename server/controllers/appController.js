@@ -40,7 +40,8 @@ export async function verifyUser(req, res, next){
 export async function register(req,res){
 
     try {
-        const { username, password, profile, email } = req.body;        
+        const { username, password, profile, email } = req.body;  
+        console.log(username+" "+password+" "+email)      
 
         // check the existing user
         const existUsername = new Promise((resolve, reject) => {
@@ -105,6 +106,8 @@ export async function register(req,res){
   "password" : "admin123"
 }
 */
+
+
 export async function login(req,res){
    
     const { username, password } = req.body;
@@ -231,50 +234,50 @@ body: {
     "score" : 2
 }
 */
-export async function updateUserscore(req,res){
+// export async function updateUserscore(req,res){
     
-    try {
-        const option = req.body.option
-        let addscore = 0
-        if(option == 1)
-        addscore = 30
-        else if(option ==0)
-        addscore = 50
-        else
-        {
-            return res.status(401).send({ error : "dont know which should be obtained"});
-        }
-        const { userId } = req.user;
-        if(userId)
-        {
-            const body = req.body;
-            UserModel.findOne({_id : userId},function(err,user)
-            {
-                if(err)console.log('err');
-                else
-                {
-                    user.score+= addscore;
-                }
-                user.save(function(err){
-                    if(err)throw err
-                    else
-                    {
-                        console.log('User score updated successfully!');
-                        return res.status(201).send({ msg : "Record Updated...!"});
-                    }
-                })
+//     try {
+//         const option = req.body.option
+//         let addscore = 0
+//         if(option == 1)
+//         addscore = 30
+//         else if(option ==0)
+//         addscore = 50
+//         else
+//         {
+//             return res.status(401).send({ error : "dont know which should be obtained"});
+//         }
+//         const { userId } = req.user;
+//         if(userId)
+//         {
+//             const body = req.body;
+//             UserModel.findOne({_id : userId},function(err,user)
+//             {
+//                 if(err)console.log('err');
+//                 else
+//                 {
+//                     user.score+= addscore;
+//                 }
+//                 user.save(function(err){
+//                     if(err)throw err
+//                     else
+//                     {
+//                         console.log('User score updated successfully!');
+//                         return res.status(201).send({ msg : "Record Updated...!"});
+//                     }
+//                 })
   
-            })
-        }
-        else
-        {
-            return res.status(401).send({ error : "User Not Found...!"});
-        }
+//             })
+//         }
+//         else
+//         {
+//             return res.status(401).send({ error : "User Not Found...!"});
+//         }
 
-    } catch (error) {
-        return res.status(401).send({ error });
-    }
-}
+//     } catch (error) {
+//         return res.status(401).send({ error });
+//     }
+// }
 
 
 /** GET: http://localhost:8080/api/generateOTP */

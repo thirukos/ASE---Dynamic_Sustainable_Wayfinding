@@ -24,7 +24,7 @@ export default function ScoreInterface() {
     useEffect(() => {
         const localusername = localStorage.getItem('username')
         getUserScore(localusername).then(function (result) {
-            setScore(result)
+            setScore(Math.floor(result))
         }).catch(function (error) {
             console.error(error);
         });
