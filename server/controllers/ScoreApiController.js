@@ -14,11 +14,4 @@ export async function getScore(req, res){
     .catch(err => console.error(err));
     
     return res.json(data);
-
-
-
-
-
-
-
 }
