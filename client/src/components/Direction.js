@@ -8,6 +8,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import { Button } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
+import { getUserScore} from '../helper/helper';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 const libraries = ['places'];
@@ -20,6 +21,22 @@ function App() {
   const [directionResponse, setDirectionResponse] = useState(null);
   const [distance, setDistance] = useState(null);
   const [travelMode, setTravelMode] = useState('DRIVING');
+  const [vis, setVis] = useState(false);
+  const [score, setScore] = useState(0);
+
+  useEffect(()=>{
+    const localusername = localStorage.getItem('username')
+    
+    getUserScore(localusername).then(function (result) {
+        setScore(Math.floor(result))
+    }).catch(function (error) {
+        console.error(error);
+    });
+    if (score > 100) setVis(true)
+
+
+
+  })
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -64,7 +81,7 @@ function App() {
         origin: "origin",
         desination: 'destination',
         distance: distanceFloat,
-        transportmode: travelMode,
+        transportmode: travelMode, 
         whetherscore: "0"
       })
     }
@@ -141,7 +158,7 @@ function App() {
               END THIS TRIP
             </Button>
           </div>
-          <WeatherCard />
+          <WeatherCard isVisible = {vis}/>
         </>
       )}
     </div>

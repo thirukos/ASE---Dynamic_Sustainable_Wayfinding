@@ -8,6 +8,7 @@ export async function getWeather(req, res){
       const API_KEY = '4f6739af1a34c954ffdd8969e47f3b67';
   
       // Required parameters 
+      console.log(req)
       const { lat, lon } = req.params;
 
       // Check if latitude and longitude are valid
@@ -16,7 +17,7 @@ export async function getWeather(req, res){
         throw new Error('Invalid geographic coordinates');
       }
   
-      // Get current weather data
+      // Get current weather data 
       const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
       const currentResponse = await fetch(currentUrl);
       const currentData = await currentResponse.json();
