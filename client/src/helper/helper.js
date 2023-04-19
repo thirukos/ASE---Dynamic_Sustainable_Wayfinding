@@ -2,6 +2,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+console.log('REACT_APP_SERVER_DOMAIN:', process.env.REACT_APP_SERVER_DOMAIN);
 
 export async function addroute(username, origin, desination, distance, transportmode) {//add route
     try {
