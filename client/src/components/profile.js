@@ -7,6 +7,7 @@ import convertToBase64 from '../helper/convert';
 import useFetch from '../hooks/fetch.hook';
 import { updateUser, getPubTrans } from '../helper/helper'
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 import styles from '../styles/username.module.css';
@@ -113,6 +114,7 @@ export default function Profile() {
 
 
             </div>
+
             <div className="text-center py-4">
               <span className='text-gray-500'><button onClick={scoreUI} className='text-red-500' >Your Score</button></span>
             </div>
@@ -125,11 +127,14 @@ export default function Profile() {
               <span className='text-gray-500'>come back later? <button onClick={userLogout} className='text-red-500' to="/">Logout</button></span>
             </div>
 
+            <div className="text-center py-4">
+              <span className='text-gray-500'><Link to='/delayprediction' className='text-red-500'>Delay Prediction</Link></span>
+            </div>
 
           </form>
 
         </div>
       </div>
     </div>
-  )
+  );
 }
