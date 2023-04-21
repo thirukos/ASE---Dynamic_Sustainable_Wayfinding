@@ -1,7 +1,7 @@
 const { spawn } = require('child_process');
 
 // Define the command to run the Python script
-const python = spawn("D:\\Python\\Python37\\python.exe", ['.\\app.py']);
+const python = spawn("client\\my_venv\\Scripts\\python.exe", ['.\\app.py']);
 
 // Handle standard output from the Python script
 python.stdout.on('data', (data) => {

@@ -15,7 +15,7 @@ describe('Login and Registration', () => {
             email: 'test@gmail.com'
         })
             .then((res) => {
-                expect(true).to.equal(true);
+                // expect(true).to.equal(true);
                 done();
             })
             .catch((err) => {
