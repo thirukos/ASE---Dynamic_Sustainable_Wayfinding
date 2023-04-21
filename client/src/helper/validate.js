@@ -1,7 +1,15 @@
 import toast from 'react-hot-toast'
 import { authenticate } from './helper'
 
-/** validate login page username */
+/**
+
+@function usernameValidate
+@async
+@param {Object} values - The object containing the values to be validated
+@param {string} values.username - The username to be validated for existence
+@description Validates the username by checking if it exists in the database, and returns any validation errors.
+@returns {Promise} Returns a Promise that resolves with any validation errors or rejects with an error message.
+*/
 export async function usernameValidate(values){
     const errors = usernameVerify({}, values);
 
@@ -17,14 +25,25 @@ export async function usernameValidate(values){
     return errors;
 }
 
-/** validate password */
+/**
+Validates the password input field for login form.
+@async
+@param {object} values - An object containing values for the form fields.
+@returns {Promise} Returns a Promise that resolves with any validation errors or an empty object if no errors.
+*/
 export async function passwordValidate(values){
     const errors = passwordVerify({}, values);
 
     return errors;
 }
 
-/** validate reset password */
+/**
+
+Validates the password input field and the confirm password input field for password reset form.
+@async
+@param {object} values - An object containing values for the form fields.
+@returns {Promise} Returns a Promise that resolves with any validation errors or an empty object if no errors.
+*/
 export async function resetPasswordValidation(values){
     const errors = passwordVerify({}, values);
 
@@ -35,7 +54,13 @@ export async function resetPasswordValidation(values){
     return errors;
 }
 
-/** validate register form */
+/**
+
+Validates the username, password, and email input fields for the registration form.
+@async
+@param {object} values - An object containing values for the form fields.
+@returns {Promise} Returns a Promise that resolves with any validation errors or an empty object if no errors.
+*/
 export async function registerValidation(values){
     const errors = usernameVerify({}, values);
     passwordVerify(errors, values);
@@ -45,13 +70,27 @@ export async function registerValidation(values){
 }
 
 /** validate profile page */
+/**
+
+Validates the user profile form.
+@async
+@function profileValidation
+@param {object} values - The object containing the profile form values.
+@param {string} values.email - The email address of the user.
+@returns {object} An object containing any validation errors.
+*/
 export async function profileValidation(values){
     const errors = emailVerify({}, values);
     return errors;
 }
 
-
-/** validate password */
+/**
+Validates the password input based on specific requirements
+@async
+@param {Object} errors - An object containing potential validation errors
+@param {Object} values - An object containing password value to validate
+@returns {Object} Returns an object containing validation errors (if any)
+*/
 function passwordVerify(errors = {}, values){
     /* eslint-disable no-useless-escape */
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -69,8 +108,14 @@ function passwordVerify(errors = {}, values){
     return errors;
 }
 
+/**
 
-/** validate username */
+@function usernameVerify
+@description Validates the username value
+@param {Object} errors - The errors object to add errors to
+@param {Object} values - The values object to validate
+@returns {Object} The updated errors object
+*/
 function usernameVerify(error = {}, values){
     if(!values.username){
         error.username = toast.error('Username Required...!');
@@ -81,7 +126,15 @@ function usernameVerify(error = {}, values){
     return error;
 }
 
-/** validate email */
+/**
+
+@function passwordVerify
+@async
+@param {Object} [errors={}] - The error object to append password validation errors to.
+@param {Object} values - The password values to validate.
+@description Validates the password field of a form to ensure it meets certain criteria.
+@returns {Object} Returns an object with appended password validation errors.
+*/
 function emailVerify(error ={}, values){
     if(!values.email){
         error.email = toast.error("Email Required...!");

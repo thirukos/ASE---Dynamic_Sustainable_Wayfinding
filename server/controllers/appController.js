@@ -6,8 +6,20 @@ import otpGenerator from 'otp-generator';
 import axios from 'axios';
 import fetch from 'node-fetch';
 
+/**
 
-/** middleware for verify user */
+@function verifyUser
+@async
+@param {Object} req - The Express request object.
+@param {Object} res - The Express response object.
+@param {Function} next - The Express next middleware function.
+@returns {Promise<void>} - The Promise resolves when the user verification is completed.
+@description
+Middleware function that verifies the existence of a user in the database.
+It checks if a user exists in the UserModel based on the provided username.
+If the user exists, it calls the next middleware function.
+If the user does not exist or there is an authentication error, it sends an appropriate error response.
+*/
 export async function verifyUser(req, res, next){ 
 
     try {
@@ -24,18 +36,19 @@ export async function verifyUser(req, res, next){
     }
 }
  
-
-/** POST: http://localhost:8080/api/register 
- * @param : {
-  "username" : "example123",
-  "password" : "admin123",
-  "email": "example@gmail.com",
-  "firstName" : "bill",
-  "lastName": "william",
-  "mobile": 8009860560,
-  "address" : "Apt. 556, Kulas Light, Gwenborough",
-  "profile": ""
-}
+/**
+POST: http://localhost:8080/api/register 
+@function register
+@async
+@param {Object} req - The Express request object.
+@param {Object} res - The Express response object.
+@returns {Promise<void>} - The Promise resolves when the user registration is completed.
+@description
+Function responsible for registering a new user.
+It checks for the existence of a user with the same username and email in the UserModel.
+If a unique username and email are provided, it hashes the password and creates a new user
+entry in the database. If the user is successfully registered, it sends a success response.
+In case of errors, it sends an appropriate error response.
 */
 export async function register(req,res){
 
@@ -100,14 +113,17 @@ export async function register(req,res){
 }
 
 
-/** POST: http://localhost:8080/api/login 
- * @param: {
-  "username" : "example123",
-  "password" : "admin123"
-}
+
+/**
+POST: http://localhost:8080/api/login 
+@function login
+@async
+@param {Object} req - The request object containing user credentials.
+@param {Object} res - The response object to send back the result.
+@description Handles user login by validating the provided credentials. If successful, it returns a JSON Web Token (JWT) for subsequent authentication.
+@returns {Object} Sends an HTTP response with a status code and a message, along with the JWT if the login is successful.
+@throws {Object} Sends an HTTP response with a status code and an error message if any error occurs during the process.
 */
-
-
 export async function login(req,res){
    
     const { username, password } = req.body;
@@ -148,7 +164,15 @@ export async function login(req,res){
 }
 
 
-/** GET: http://localhost:8080/api/user/example123 */
+/** GET: http://localhost:8080/api/user/example123 
+@function getUser
+@async
+@param {Object} req - The request object containing the username as a parameter.
+@param {Object} res - The response object to send back the result.
+@description Retrieves a user's data from the database using their username and returns it, excluding their password.
+@returns {Object} Sends an HTTP response with a status code and the user data if found.
+@throws {Object} Sends an HTTP response with a status code and an error message if any error occurs during the process or if the user is not found.
+*/
 export async function getUser(req,res){
     
     const { username } = req.params;
@@ -175,7 +199,15 @@ export async function getUser(req,res){
 
 
 
-/** GET: http://localhost:8080/api/user/example123 */
+/** GET: http://localhost:8080/api/user/example123 
+@function getPubTrans
+@async
+@param {Object} req - The request object.
+@param {Object} res - The response object to send back the result.
+@description Retrieves public transport data from the National Transport API and returns it in JSON format.
+@returns {Object} Sends an HTTP response with a status code and the public transport data in JSON format.
+@throws {Error} Logs the error to the console if any error occurs during the process of fetching data from the API.
+*/
 export async function getPubTrans(req,res){
 
     const data = await axios.get('https://api.nationaltransport.ie/gtfsr/v1?format=json', {
@@ -193,15 +225,16 @@ export async function getPubTrans(req,res){
 }
 
 
-/** PUT: http://localhost:8080/api/updateuser 
- * @param: {
-  "header" : "<token>"
-}
-body: {
-    firstName: '',
-    address : '',
-    profile : ''
-}
+
+/**
+PUT: http://localhost:8080/api/updateuser 
+@function updateUser
+@async
+@param {Object} req - The request object.
+@param {Object} res - The response object to send back the result.
+@description Updates the user information based on the provided data in the request body.
+@returns {Object} Sends an HTTP response with a status code and a message indicating whether the user's record has been updated or not.
+@throws {Error} Sends an HTTP response with an error status code and message if any error occurs during the process of updating the user's data.
 */
 export async function updateUser(req,res){
     try {
@@ -225,69 +258,31 @@ export async function updateUser(req,res){
     }
 }
 
-/** PUT: http://localhost:8080/api/updateUserscore 
- * @param: {
-  "header" : "Bearer <token>"
-}
-body: {
-    "option": 1
-    "score" : 2
-}
+
+/**
+GET: http://localhost:8080/api/generateOTP
+@function generateOTP
+@async
+@param {Object} req - The request object.
+@param {Object} res - The response object to send back the result.
+@description Generates a 6-digit OTP and saves it in the application's local storage.
+@returns {Object} Sends an HTTP response with a status code and the generated OTP.
 */
-// export async function updateUserscore(req,res){
-    
-//     try {
-//         const option = req.body.option
-//         let addscore = 0
-//         if(option == 1)
-//         addscore = 30
-//         else if(option ==0)
-//         addscore = 50
-//         else
-//         {
-//             return res.status(401).send({ error : "dont know which should be obtained"});
-//         }
-//         const { userId } = req.user;
-//         if(userId)
-//         {
-//             const body = req.body;
-//             UserModel.findOne({_id : userId},function(err,user)
-//             {
-//                 if(err)console.log('err');
-//                 else
-//                 {
-//                     user.score+= addscore;
-//                 }
-//                 user.save(function(err){
-//                     if(err)throw err
-//                     else
-//                     {
-//                         console.log('User score updated successfully!');
-//                         return res.status(201).send({ msg : "Record Updated...!"});
-//                     }
-//                 })
-  
-//             })
-//         }
-//         else
-//         {
-//             return res.status(401).send({ error : "User Not Found...!"});
-//         }
-
-//     } catch (error) {
-//         return res.status(401).send({ error });
-//     }
-// }
-
-
-/** GET: http://localhost:8080/api/generateOTP */
 export async function generateOTP(req,res){
     req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
     res.status(201).send({ code: req.app.locals.OTP })
 }
 
 
-/** GET: http://localhost:8080/api/verifyOTP */
+/** GET: http://localhost:8080/api/verifyOTP 
+@function verifyOTP
+@async
+@param {Object} req - The request object containing the OTP entered by the user.
+@param {Object} res - The response object to send back the result.
+@description Verifies the OTP entered by the user against the OTP stored in the application's local storage.
+@returns {Object} Sends an HTTP response with a status code and a message indicating whether the OTP verification was successful or not.
+@throws {Error} Sends an HTTP response with an error status code and message if the provided OTP does not match the stored OTP.
+*/
 export async function verifyOTP(req,res){
     const { code } = req.query;
     if(parseInt(req.app.locals.OTP) === parseInt(code)){
@@ -300,7 +295,14 @@ export async function verifyOTP(req,res){
 
 
 // successfully redirect user when OTP is valid
-/** GET: http://localhost:8080/api/createResetSession */
+/** GET: http://localhost:8080/api/createResetSession 
+@function createResetSession
+@async
+@param {Object} req - The request object.
+@param {Object} res - The response object to send back the result.
+@description Checks if there is an active reset session in the application's local storage.
+@returns {Object} Sends an HTTP response with a status code and either a reset session flag or an error message.
+*/
 export async function createResetSession(req,res){
    if(req.app.locals.resetSession){
         return res.status(201).send({ flag : req.app.locals.resetSession})
@@ -308,9 +310,14 @@ export async function createResetSession(req,res){
    return res.status(440).send({error : "Session expired!"})
 }
 
-
-// update the password when we have valid session
-/** PUT: http://localhost:8080/api/resetPassword */
+/** PUT: http://localhost:8080/api/resetPassword 
+@function resetPassword
+@async
+@param {Object} req - The request object containing the user's username and new password.
+@param {Object} res - The response object to send back the result.
+@description Resets a user's password if the reset session is active, hashing the new password and updating the user record in the database.
+@returns {Object} Sends an HTTP response with a status code and either a success message or an error message.
+*/
 export async function resetPassword(req,res){
     try {
         
