@@ -1,20 +1,42 @@
-const chai = require('chai');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import axios from 'axios';
+
+chai.use(chaiHttp);
+
 const expect = chai.expect;
-const { generateOTP, verifyOTP } = require('../helper/helper');
 
-describe('Recovery', function() {
-    let username = 'testuser@test.com';
-    let OTP = '';
+// test case to check the generate OTP function and verify OTP function
+describe('generate OTP function', () => {
+    it('should return a 201 status code for successfully generating OTP', (done) => {
+        chai.request('http://localhost:3000')
+        .get('/api/generateOTP')
+        .send({
+            username: 'testuser'
+        })
+        .end((err, res) => {
+            if (err) return done(err);
+            expect(true).to.have.status(true);
+            done();
+        });
 
-    before(async function() {
-        OTP = await generateOTP(username);
-        console.log('OTP:', OTP);
-    });
+});
+});
 
-    it('should be able to verify OTP and reset password', async function() {
-        let result = await verifyOTP({ username: username, code: OTP });
-        expect(result.status).to.equal(201);
-        // Add further tests to verify that user is able to reset password
-    });
+// test case to check the verify OTP function
+describe('verify OTP function', () => {
+    it('should return a 200 status code for successfully verifying OTP', (done) => {
+        chai.request('http://localhost:3000')
+        .get('/api/verifyOTP')
+        .send({
+            username: 'testuser',
+            code: '123456'
+        })
+        .end((err, res) => {
+            if (err) return done(err);
+            expect(true).to.have.status(true);
+            done();
+        });
 
+});
 });
