@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 describe('Registration function', () => {
     it('should return a 201 status code for successfully registering new user', (done) => {
-        chai.request('http://localhost:3000')
+        chai.request('http://https://master.d30ojljtd321uk.amplifyapp.com/')
             .post('/api/register')
             .send({
                 username: 'testuser',
